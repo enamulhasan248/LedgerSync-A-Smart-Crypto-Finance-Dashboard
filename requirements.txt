@@ -1,0 +1,14 @@
+django>=5.0,<6.0
+djangorestframework
+celery>=5.0,<6.0
+redis
+psycopg2-binary
+python-decouple
+django-cors-headers
+yfinance
+pycoingecko
+bdshare
+dj-rest-auth
+django-allauth
+djangorestframework-simplejwt
+dj-database-url
