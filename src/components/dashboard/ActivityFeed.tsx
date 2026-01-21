@@ -43,28 +43,9 @@ export function ActivityFeed() {
         <CardTitle className="text-lg font-semibold">Recent Activity</CardTitle>
       </CardHeader>
       <CardContent className="space-y-3">
-        {mockActivities.map((activity, index) => {
-          const Icon = getActivityIcon(activity.type);
-          const colorClass = getActivityColor(activity.type);
-          
-          return (
-            <div
-              key={activity.id}
-              className="flex items-start gap-3 p-3 rounded-lg bg-muted/50 hover:bg-muted transition-colors animate-slide-in"
-              style={{ animationDelay: `${400 + index * 100}ms` }}
-            >
-              <div className={cn('w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0', colorClass)}>
-                <Icon className="w-4 h-4" />
-              </div>
-              <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium truncate">{activity.message}</p>
-                <p className="text-xs text-muted-foreground mt-0.5">
-                  {formatTimeAgo(activity.timestamp)}
-                </p>
-              </div>
-            </div>
-          );
-        })}
+        <div className="text-center py-8 text-muted-foreground text-sm">
+          No recent activity
+        </div>
       </CardContent>
     </Card>
   );

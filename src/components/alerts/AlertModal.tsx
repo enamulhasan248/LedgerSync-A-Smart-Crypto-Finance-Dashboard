@@ -17,9 +17,10 @@ import {
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { mockAssets } from '@/lib/mockData';
 import { Bell, TrendingUp, TrendingDown } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { useQuery } from '@tanstack/react-query';
+import { fetchAssets, Asset } from '@/lib/api';
 
 interface AlertModalProps {
   open: boolean;
@@ -33,10 +34,16 @@ export function AlertModal({ open, onOpenChange, preselectedSymbol }: AlertModal
   const [targetPrice, setTargetPrice] = useState('');
   const { toast } = useToast();
 
+  const { data: assets } = useQuery({
+    queryKey: ['assets'],
+    queryFn: fetchAssets,
+  });
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
-    const asset = mockAssets.find(a => a.symbol === selectedAsset);
+
+    // In a real app, this would make an API call to create an alert
+    const asset = assets?.find((a: Asset) => a.symbol === selectedAsset);
     if (!asset || !targetPrice) return;
 
     toast({
@@ -61,7 +68,7 @@ export function AlertModal({ open, onOpenChange, preselectedSymbol }: AlertModal
             Set up an alert to be notified when an asset reaches your target price.
           </DialogDescription>
         </DialogHeader>
-        
+
         <form onSubmit={handleSubmit} className="space-y-4 py-4">
           <div className="space-y-2">
             <Label htmlFor="asset">Select Asset</Label>
@@ -70,7 +77,7 @@ export function AlertModal({ open, onOpenChange, preselectedSymbol }: AlertModal
                 <SelectValue placeholder="Choose an asset" />
               </SelectTrigger>
               <SelectContent>
-                {mockAssets.map((asset) => (
+                {assets?.map((asset: Asset) => (
                   <SelectItem key={asset.id} value={asset.symbol}>
                     <span className="flex items-center gap-2">
                       <span className="font-medium">{asset.symbol}</span>
