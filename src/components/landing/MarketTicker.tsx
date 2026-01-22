@@ -1,10 +1,22 @@
 import { TrendingUp, TrendingDown } from 'lucide-react';
-import { tickerAssets } from '@/lib/newsData';
+import { tickerAssets } from '@/lib/newsData'; // Fallback
 import { cn } from '@/lib/utils';
+import { MarketTickerItem } from '@/lib/api';
 
-export function MarketTicker() {
-  // Duplicate the assets to create seamless loop
-  const duplicatedAssets = [...tickerAssets, ...tickerAssets];
+interface MarketTickerProps {
+  data?: MarketTickerItem[];
+  isLoading?: boolean;
+}
+
+export function MarketTicker({ data, isLoading }: MarketTickerProps) {
+  // Use real data if available, otherwise mock data (or empty array)
+  // duplicating for infinite scroll effect
+  const assetsToDisplay = (data && data.length > 0) ? data : tickerAssets;
+  const duplicatedAssets = [...assetsToDisplay, ...assetsToDisplay, ...assetsToDisplay]; // x3 for smooth scrolling
+
+  if (isLoading && !data) {
+    return <div className="h-12 border-y border-border bg-card animate-pulse max-w-full"></div>;
+  }
 
   return (
     <div className="bg-card border-y border-border overflow-hidden">
@@ -17,7 +29,7 @@ export function MarketTicker() {
             <span className="font-semibold text-foreground">{asset.symbol}</span>
             <span className="text-muted-foreground text-sm">{asset.name}</span>
             <span className="font-medium text-foreground">
-              ${asset.price.toLocaleString()}
+              ${asset.price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
             </span>
             <span
               className={cn(

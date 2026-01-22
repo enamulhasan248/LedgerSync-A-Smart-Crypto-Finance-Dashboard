@@ -18,22 +18,22 @@ const queryClient = new QueryClient();
 // Protected route wrapper
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const { isAuthenticated } = useAuth();
-  
+
   if (!isAuthenticated) {
     return <Navigate to="/auth" replace />;
   }
-  
+
   return <>{children}</>;
 }
 
 // Public route wrapper (redirects to dashboard if authenticated)
 function PublicRoute({ children }: { children: React.ReactNode }) {
   const { isAuthenticated } = useAuth();
-  
+
   if (isAuthenticated) {
     return <Navigate to="/dashboard" replace />;
   }
-  
+
   return <>{children}</>;
 }
 
@@ -43,11 +43,7 @@ function AppRoutes() {
       {/* Public Routes */}
       <Route
         path="/"
-        element={
-          <PublicRoute>
-            <Landing />
-          </PublicRoute>
-        }
+        element={<Landing />}
       />
       <Route
         path="/auth"
@@ -57,7 +53,7 @@ function AppRoutes() {
           </PublicRoute>
         }
       />
-      
+
       {/* Protected Dashboard Routes */}
       <Route
         path="/dashboard"
@@ -99,7 +95,7 @@ function AppRoutes() {
           </ProtectedRoute>
         }
       />
-      
+
       {/* 404 */}
       <Route path="*" element={<NotFound />} />
     </Routes>

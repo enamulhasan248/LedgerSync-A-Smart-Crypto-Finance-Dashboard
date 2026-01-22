@@ -22,7 +22,11 @@ export interface NewsItem {
     source: string;
     url: string;
     published_at: string;
-    summary: string;
+    summary?: string;
+}
+
+export interface NewsHeadline extends NewsItem {
+    image?: string | null;
 }
 
 export const fetchAssets = async (): Promise<Asset[]> => {
@@ -45,6 +49,34 @@ export const fetchNews = async (country: string = 'us'): Promise<NewsItem[]> => 
     const response = await fetch(`${API_BASE_URL}/news/?country=${country}`);
     if (!response.ok) {
         throw new Error('Failed to fetch news');
+    }
+    return response.json();
+};
+
+export const fetchTopHeadlines = async (): Promise<NewsHeadline[]> => {
+    const response = await fetch(`${API_BASE_URL}/news/top-headlines/`);
+    if (!response.ok) {
+        throw new Error('Failed to fetch top headlines');
+    }
+    return response.json();
+};
+
+export interface MarketTickerItem {
+    symbol: string;
+    name: string;
+    price: number;
+    change: number;
+}
+
+export interface MarketSummary {
+    tickers: MarketTickerItem[];
+    gainers: MarketTickerItem[];
+}
+
+export const fetchMarketSummary = async (): Promise<MarketSummary> => {
+    const response = await fetch(`${API_BASE_URL}/market/summary/`);
+    if (!response.ok) {
+        throw new Error('Failed to fetch market summary');
     }
     return response.json();
 };

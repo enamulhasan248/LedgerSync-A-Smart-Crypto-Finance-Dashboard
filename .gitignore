@@ -37,3 +37,9 @@ db.sqlite3-journal
 # Environment variables
 .env
 core/.env
+
+# Debug
+debug_result.txt
+debug_output.txt
+core/debug_result.txt
+core/debug_output.txt

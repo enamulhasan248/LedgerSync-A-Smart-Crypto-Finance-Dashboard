@@ -1,4 +1,4 @@
-from datetime import timedelta
+from datetime import timedelta, datetime
 from django.utils import timezone
 from rest_framework import serializers
 from assets.models import Asset, PricePoint
@@ -54,8 +54,21 @@ class AssetSerializer(serializers.ModelSerializer):
         return round(float(change), 2)
 
 class NewsSerializer(serializers.Serializer):
-    title = serializers.CharField()
+    # Backend utils returns 'headline', 'source', 'link', 'image', 'timestamp'
+    # Frontend expects: title, source, url, published_at, summary.
+    # I should map them.
+    
+    title = serializers.CharField(source='headline')
     source = serializers.CharField()
-    url = serializers.URLField()
-    published_at = serializers.DateTimeField()
+    url = serializers.URLField(source='link')
+    published_at = serializers.SerializerMethodField()
+    image = serializers.URLField(required=False, allow_null=True)
     summary = serializers.CharField(required=False)
+
+    def get_published_at(self, obj):
+        # Obj is a dict from utils.py
+        # timestamp is int
+        ts = obj.get('timestamp')
+        if ts:
+            return datetime.fromtimestamp(ts).isoformat()
+        return None

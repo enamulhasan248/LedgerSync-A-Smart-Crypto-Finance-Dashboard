@@ -28,7 +28,7 @@ const Auth = () => {
     setIsLoading(true);
     try {
       await login(loginEmail, loginPassword);
-      navigate('/dashboard');
+      navigate('/');
     } finally {
       setIsLoading(false);
     }
@@ -39,7 +39,7 @@ const Auth = () => {
     setIsLoading(true);
     try {
       await signup(signupName, signupEmail, signupPassword);
-      navigate('/dashboard');
+      navigate('/');
     } finally {
       setIsLoading(false);
     }
@@ -49,7 +49,7 @@ const Auth = () => {
     setIsLoading(true);
     try {
       await loginWithGoogle();
-      navigate('/dashboard');
+      navigate('/');
     } finally {
       setIsLoading(false);
     }
