@@ -1,73 +1,136 @@
-# Welcome to your Lovable project
+# LedgerSync - Smart Crypto & Finance Dashboard
 
-## Project info
+![Build Status](https://img.shields.io/badge/build-passing-brightgreen)
+![License](https://img.shields.io/badge/license-MIT-blue)
+![Version](https://img.shields.io/badge/version-1.0.0-orange)
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+LedgerSync is a comprehensive financial dashboard application that allows users to track global stocks, cryptocurrencies, and Dhaka Stock Exchange (DSE) assets in real-time. It solves the problem of scattered financial data by providing a single, unified interface for portfolio management, news aggregation, and market analysis, featuring a robust public view and a personalized authenticated dashboard.
 
-## How can I edit this code?
+## Table of Contents
 
-There are several ways of editing your application.
+- [The Essentials](#the-essentials)
+    - [Prerequisites](#prerequisites)
+    - [Installation](#installation)
+- [Usage](#usage)
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Configuration](#configuration)
 
-**Use Lovable**
+---
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+## The Essentials
 
-Changes made via Lovable will be committed automatically to this repo.
+### Prerequisites
 
-**Use your preferred IDE**
+Before you begin, ensure you have the following installed on your local machine:
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+- **Node.js** (v18.0 or higher)
+- **Python** (v3.10 or higher)
+- **PostgreSQL** (Optional, defaults to SQLite for dev)
+- **Redis** (Required for background tasks like price updates)
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+### Installation
 
-Follow these steps:
+Follow these steps to set up the development environment:
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+1.  **Clone the repository:**
+    ```bash
+    git clone https://github.com/enamulhasan248/LedgerSync-A-Smart-Crypto-Finance-Dashboard.git
+    cd asset-tracker-pro-main
+    ```
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+2.  **Backend Setup (Django):**
+    ```bash
+    cd core
+    python -m venv venv
+    
+    # Activate virtual environment
+    # Windows:
+    venv\Scripts\activate
+    # macOS/Linux:
+    # source venv/bin/activate
+    
+    pip install -r requirements.txt
+    
+    # Run migrations
+    python manage.py migrate
+    
+    # Start the backend server
+    python manage.py runserver
+    ```
+    *Note: If you don't have a `requirements.txt` yet, install dependencies manually based on `settings.py`: `pip install django djangorestframework django-cors-headers djangorestframework-simplejwt django-allauth dj-rest-auth django-filter python-decouple dj-database_url redis celery yfinance pycoingecko bdshare`*
 
-# Step 3: Install the necessary dependencies.
-npm i
+3.  **Frontend Setup (React/Vite):**
+    Open a new terminal and navigate to the root directory (where `package.json` is).
+    ```bash
+    npm install
+    npm run dev
+    ```
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+4.  **Celery Worker (For real-time updates):**
+    Open a third terminal in the `core` directory with your venv activated.
+    ```bash
+    celery -A core worker -l info
+    ```
+
+5.  **Celery Beat (For scheduled tasks):**
+    Open a fourth terminal in the `core` directory.
+    ```bash
+    celery -A core beat -l info
+    ```
+
+## Usage
+
+Once both servers are running:
+
+- **Frontend:** Visit `http://localhost:8080` (or the port shown in your terminal).
+- **Backend API:** Access the API at `http://127.0.0.1:8000/api/`.
+
+### Public Access
+- **Home:** Landing page with market overview.
+- **Stocks/Crypto:** Browse assets without logging in at `/stocks` and `/crypto`.
+- **News:** Read global financial news at `/news`.
+
+### Authenticated Dashboard
+1.  Click "Login / Sign Up" to create an account.
+2.  Access your personal dashboard to view your portfolio value.
+3.  Add assets to your watchlist to track them closely.
+4.  View detailed interactive charts for any asset.
+
+## Features
+
+- **Public Market Browser:** distinct, grid-based views for Stocks and Crypto accessible to everyone.
+- **Global & Local Markets:** dedicated support for Global Stocks (Yahoo Finance), Cryptocurrencies (CoinGecko), and Dhaka Stock Exchange (DSE).
+- **Real-time News:** Aggregated financial news from US, UK, Japan, and Bangladesh.
+- **Interactive Charts:** Dynamic price history charts with adjustable timeframes (24h, 7d, etc.).
+- **User Dashboard:** Personalized view with portfolio tracking and watchlist management.
+- **Secure Authentication:** JWT-based authentication system.
+
+## Tech Stack
+
+**Frontend:**
+- **React.js** (Vite)
+- **TypeScript**
+- **Tailwind CSS** (Styling)
+- **Shadcn UI** (Component Library)
+- **TanStack Query** (Data Fetching)
+- **Recharts** (Charting)
+
+**Backend:**
+- **Django** (Python Framework)
+- **Django REST Framework** (API)
+- **Celery & Redis** (Async Tasks & Scheduling)
+- **PostgreSQL / SQLite** (Database)
+
+## Configuration
+
+Create a `.env` file in the `core` directory with the following variables:
+
+```env
+SECRET_KEY=your-secret-key-here
+DEBUG=True
+DATABASE_URL=postgres://user:password@localhost:5432/ledgersync
+# Or for SQLite: sqlite:///db.sqlite3
+REDIS_URL=redis://localhost:6379/0
 ```
 
-**Edit a file directly in GitHub**
-
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)

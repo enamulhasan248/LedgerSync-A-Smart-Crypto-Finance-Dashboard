@@ -9,6 +9,8 @@ import Landing from "./pages/Landing";
 import Auth from "./pages/Auth";
 import Index from "./pages/Index";
 import MarketWatch from "./pages/MarketWatch";
+import Stocks from "./pages/Stocks";
+import CryptoPage from "./pages/Crypto";
 import Alerts from "./pages/Alerts";
 import Settings from "./pages/Settings";
 import NotFound from "./pages/NotFound";
@@ -37,22 +39,37 @@ function PublicRoute({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }
 
+import { PublicLayout } from "@/components/layout/PublicLayout";
+import { PublicAssetBrowser } from "@/components/market/PublicAssetBrowser";
+import NewsPage from "./pages/News";
+
+// ... existing imports
+
 function AppRoutes() {
   return (
     <Routes>
       {/* Public Routes */}
-      <Route
-        path="/"
-        element={<Landing />}
+      <Route path="/" element={<Landing />} />
+      <Route path="/auth" element={
+        <PublicRoute>
+          <Auth />
+        </PublicRoute>
+      }
       />
-      <Route
-        path="/auth"
-        element={
-          <PublicRoute>
-            <Auth />
-          </PublicRoute>
-        }
-      />
+
+      <Route path="/stocks" element={
+        <PublicLayout>
+          <PublicAssetBrowser type="STOCKS" title="Stock Market" />
+        </PublicLayout>
+      } />
+
+      <Route path="/crypto" element={
+        <PublicLayout>
+          <PublicAssetBrowser type="CRYPTO" title="Crypto Market" />
+        </PublicLayout>
+      } />
+
+      <Route path="/news" element={<NewsPage />} />
 
       {/* Protected Dashboard Routes */}
       <Route
@@ -72,6 +89,22 @@ function AppRoutes() {
             <DashboardLayout>
               <MarketWatch />
             </DashboardLayout>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/dashboard/stocks"
+        element={
+          <ProtectedRoute>
+            <Stocks />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/dashboard/crypto"
+        element={
+          <ProtectedRoute>
+            <CryptoPage />
           </ProtectedRoute>
         }
       />

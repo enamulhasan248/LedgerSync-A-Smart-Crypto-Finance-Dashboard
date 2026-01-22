@@ -1,6 +1,6 @@
 import { TrendingUp, User, LogOut } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import {
   DropdownMenu,
@@ -13,12 +13,15 @@ import {
 
 export function LandingNav() {
   const navigate = useNavigate();
+  const location = useLocation();
   const { isAuthenticated, user, logout } = useAuth();
 
   const handleLogout = () => {
     logout();
     navigate('/');
   };
+
+  const isActive = (path: string) => location.pathname === path;
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -29,6 +32,38 @@ export function LandingNav() {
           </div>
           <span className="font-bold text-xl tracking-tight">LedgerSync</span>
         </div>
+
+        {/* Centered Navigation */}
+        <nav className="hidden md:flex items-center gap-6 absolute left-1/2 -translate-x-1/2">
+          <Button
+            variant="ghost"
+            className={(isActive('/') ? "text-foreground font-semibold" : "text-muted-foreground hover:text-foreground")}
+            onClick={() => navigate('/')}
+          >
+            Home
+          </Button>
+          <Button
+            variant="ghost"
+            className={(isActive('/stocks') ? "text-foreground font-semibold" : "text-muted-foreground hover:text-foreground")}
+            onClick={() => navigate('/stocks')}
+          >
+            Stocks
+          </Button>
+          <Button
+            variant="ghost"
+            className={(isActive('/crypto') ? "text-foreground font-semibold" : "text-muted-foreground hover:text-foreground")}
+            onClick={() => navigate('/crypto')}
+          >
+            Crypto
+          </Button>
+          <Button
+            variant="ghost"
+            className={(isActive('/news') ? "text-foreground font-semibold" : "text-muted-foreground hover:text-foreground")}
+            onClick={() => navigate('/news')}
+          >
+            News
+          </Button>
+        </nav>
 
         {isAuthenticated ? (
           <div className="flex items-center gap-4">

@@ -16,7 +16,7 @@ export function PriceChart() {
   // Fetch all assets to populate the selector
   const { data: assets } = useQuery({
     queryKey: ['assets'],
-    queryFn: fetchAssets,
+    queryFn: () => fetchAssets(),
   });
 
   // Set default selected asset when assets are loaded
@@ -38,16 +38,11 @@ export function PriceChart() {
   const chartData = useMemo(() => {
     if (!historyData) return [];
     return historyData.map(point => ({
-      time: point.timestamp, // Keep original for detailed tooltip if needed
-      displayTime: timeframe === '24h'
-        ? format(new Date(point.timestamp), 'HH:mm')
-        : format(new Date(point.timestamp), 'MMM dd'),
-      price: parseFloat(point.price.toString()),
-    })).reverse(); // API might return new -> old, we want old -> new for chart usually (check API sort order)
-    // Actually API ViewSet .filter(). Filter preserves default ordering? 
-    // Model ordering is '-timestamp' (newest first). Recharts needs oldest first (left to right).
-    // So .reverse() is correct.
-  }, [historyData, timeframe]);
+      time: point.time,
+      displayTime: point.time,
+      price: typeof point.value === 'string' ? parseFloat(point.value) : point.value,
+    }));
+  }, [historyData]);
 
   const selectedAsset = assets?.find(a => a.id.toString() === selectedAssetId);
 

@@ -1,14 +1,16 @@
 import { useState } from 'react';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
-import { 
-  LayoutDashboard, 
-  LineChart, 
-  Bell, 
+import {
+  LayoutDashboard,
+  LineChart,
+  Bell,
   Settings,
   ChevronLeft,
   ChevronRight,
   TrendingUp,
-  LogOut
+  LogOut,
+  Bitcoin,
+  Home
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -21,7 +23,10 @@ interface NavItem {
 }
 
 const navItems: NavItem[] = [
+  { title: 'Home', href: '/', icon: Home },
   { title: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
+  { title: 'Stocks', href: '/dashboard/stocks', icon: TrendingUp },
+  { title: 'Crypto', href: '/dashboard/crypto', icon: Bitcoin },
   { title: 'Market Watch', href: '/dashboard/market', icon: LineChart },
   { title: 'Price Alerts', href: '/dashboard/alerts', icon: Bell },
   { title: 'Settings', href: '/dashboard/settings', icon: Settings },

@@ -25,3 +25,15 @@ class PricePoint(models.Model):
 
     def __str__(self):
         return f"{self.asset.symbol} - {self.price} @ {self.timestamp}"
+
+class Watchlist(models.Model):
+    user = models.ForeignKey('auth.User', on_delete=models.CASCADE, related_name='watchlist')
+    asset = models.ForeignKey(Asset, on_delete=models.CASCADE, related_name='watched_by')
+    added_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('user', 'asset')
+        ordering = ['-added_at']
+
+    def __str__(self):
+        return f"{self.user.username} watches {self.asset.symbol}"
