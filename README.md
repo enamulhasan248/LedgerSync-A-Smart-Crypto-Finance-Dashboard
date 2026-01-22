@@ -105,6 +105,8 @@ Once both servers are running:
 - **Interactive Charts:** Dynamic price history charts with adjustable timeframes (24h, 7d, etc.).
 - **User Dashboard:** Personalized view with portfolio tracking and watchlist management.
 - **Secure Authentication:** JWT-based authentication system.
+- **Personalized Watchlist:** Users can "star" assets to create a custom monitoring feed.
+- **Set Alert:** Users can set an alert for a specific asset that they are targeting to buy or sell once it reaches the targeted price point. The system will alert the user with a notification.
 
 ## Tech Stack
 
