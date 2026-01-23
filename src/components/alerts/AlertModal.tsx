@@ -34,9 +34,9 @@ export function AlertModal({ open, onOpenChange, preselectedSymbol }: AlertModal
   const [targetPrice, setTargetPrice] = useState('');
   const { toast } = useToast();
 
-  const { data: assets } = useQuery({
+  const { data: assets } = useQuery<Asset[]>({
     queryKey: ['assets'],
-    queryFn: fetchAssets,
+    queryFn: () => fetchAssets(),
   });
 
   const handleSubmit = (e: React.FormEvent) => {

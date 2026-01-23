@@ -45,108 +45,138 @@ import NewsPage from "./pages/News";
 
 // ... existing imports
 
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
+
+function PageTitleUpdater() {
+  const location = useLocation();
+
+  useEffect(() => {
+    const path = location.pathname;
+    let title = "LedgerSync";
+
+    if (path === "/") title = "LedgerSync - Home";
+    else if (path === "/auth") title = "LedgerSync - Login";
+    else if (path === "/stocks") title = "LedgerSync - Stocks";
+    else if (path === "/crypto") title = "LedgerSync - Crypto";
+    else if (path === "/news") title = "LedgerSync - News";
+    else if (path === "/dashboard") title = "LedgerSync - Dashboard";
+    else if (path === "/dashboard/market") title = "LedgerSync - Market Watch";
+    else if (path === "/dashboard/stocks") title = "LedgerSync - Stocks";
+    else if (path === "/dashboard/crypto") title = "LedgerSync - Crypto";
+    else if (path === "/dashboard/alerts") title = "LedgerSync - Alerts";
+    else if (path === "/dashboard/settings") title = "LedgerSync - Settings";
+
+    document.title = title;
+  }, [location]);
+
+  return null;
+}
+
 function AppRoutes() {
   return (
-    <Routes>
-      {/* Public Routes */}
-      <Route path="/" element={<Landing />} />
-      <Route path="/auth" element={
-        <PublicRoute>
-          <Auth />
-        </PublicRoute>
-      }
-      />
+    <>
+      <PageTitleUpdater />
+      <Routes>
+        {/* Public Routes */}
+        <Route path="/" element={<Landing />} />
+        <Route path="/auth" element={
+          <PublicRoute>
+            <Auth />
+          </PublicRoute>
+        }
+        />
 
-      <Route path="/stocks" element={
-        <PublicLayout>
-          <PublicAssetBrowser type="STOCKS" title="Stock Market" />
-        </PublicLayout>
-      } />
+        <Route path="/stocks" element={
+          <PublicLayout>
+            <PublicAssetBrowser type="STOCKS" title="Stock Market" />
+          </PublicLayout>
+        } />
 
-      <Route path="/crypto" element={
-        <PublicLayout>
-          <PublicAssetBrowser type="CRYPTO" title="Crypto Market" />
-        </PublicLayout>
-      } />
+        <Route path="/crypto" element={
+          <PublicLayout>
+            <PublicAssetBrowser type="CRYPTO" title="Crypto Market" />
+          </PublicLayout>
+        } />
 
-      <Route path="/news" element={<NewsPage />} />
+        <Route path="/news" element={<NewsPage />} />
 
-      {/* Protected Dashboard Routes */}
-      <Route
-        path="/dashboard"
-        element={
-          <ProtectedRoute>
-            <DashboardLayout>
-              <Index />
-            </DashboardLayout>
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/dashboard/market"
-        element={
-          <ProtectedRoute>
-            <DashboardLayout>
-              <MarketWatch />
-            </DashboardLayout>
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/dashboard/stocks"
-        element={
-          <ProtectedRoute>
-            <Stocks />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/dashboard/crypto"
-        element={
-          <ProtectedRoute>
-            <CryptoPage />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/dashboard/alerts"
-        element={
-          <ProtectedRoute>
-            <DashboardLayout>
-              <Alerts />
-            </DashboardLayout>
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/dashboard/settings"
-        element={
-          <ProtectedRoute>
-            <DashboardLayout>
-              <Settings />
-            </DashboardLayout>
-          </ProtectedRoute>
-        }
-      />
+        {/* Protected Dashboard Routes */}
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute>
+              <DashboardLayout>
+                <Index />
+              </DashboardLayout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/dashboard/market"
+          element={
+            <ProtectedRoute>
+              <DashboardLayout>
+                <MarketWatch />
+              </DashboardLayout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/dashboard/stocks"
+          element={
+            <ProtectedRoute>
+              <Stocks />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/dashboard/crypto"
+          element={
+            <ProtectedRoute>
+              <CryptoPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/dashboard/alerts"
+          element={
+            <ProtectedRoute>
+              <DashboardLayout>
+                <Alerts />
+              </DashboardLayout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/dashboard/settings"
+          element={
+            <ProtectedRoute>
+              <DashboardLayout>
+                <Settings />
+              </DashboardLayout>
+            </ProtectedRoute>
+          }
+        />
 
-      {/* 404 */}
-      <Route path="*" element={<NotFound />} />
-    </Routes>
-  );
+        {/* 404 */}
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+      );
 }
 
 const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <AuthProvider>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <AppRoutes />
-        </BrowserRouter>
-      </TooltipProvider>
-    </AuthProvider>
-  </QueryClientProvider>
-);
+      <QueryClientProvider client={queryClient}>
+        <AuthProvider>
+          <TooltipProvider>
+            <Toaster />
+            <Sonner />
+            <BrowserRouter>
+              <AppRoutes />
+            </BrowserRouter>
+          </TooltipProvider>
+        </AuthProvider>
+      </QueryClientProvider>
+      );
 
-export default App;
+      export default App;

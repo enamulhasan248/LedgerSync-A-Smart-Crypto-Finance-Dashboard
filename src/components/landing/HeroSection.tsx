@@ -46,14 +46,14 @@ export function HeroSection() {
                     )}
 
                     {/* Overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/20 to-slate-950/90" />
 
                     {/* Text Content */}
-                    <div className="absolute bottom-0 left-0 p-6 md:p-8 w-full">
-                      <span className="inline-block px-2 py-1 rounded bg-primary/90 text-primary-foreground text-xs font-semibold mb-3">
+                    <div className="absolute bottom-0 left-0 p-6 md:p-10 w-full z-10">
+                      <span className="inline-block px-3 py-1 rounded-full bg-primary text-primary-foreground text-sm font-semibold mb-4 shadow-lg backdrop-blur-sm">
                         {item.source}
                       </span>
-                      <h2 className="text-xl md:text-3xl font-bold text-white leading-tight line-clamp-2 md:line-clamp-3">
+                      <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold text-white leading-tight drop-shadow-md line-clamp-2">
                         {item.title}
                       </h2>
                     </div>

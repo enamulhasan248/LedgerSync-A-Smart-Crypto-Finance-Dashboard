@@ -19,9 +19,9 @@ interface AssetTableProps {
 }
 
 export function AssetTable({ onSetAlert }: AssetTableProps) {
-  const { data: assets, isLoading, error } = useQuery({
+  const { data: assets, isLoading, error } = useQuery<Asset[]>({
     queryKey: ['assets'],
-    queryFn: fetchAssets,
+    queryFn: () => fetchAssets(),
     refetchInterval: 60000, // Refresh every minute
   });
 

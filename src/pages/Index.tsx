@@ -6,9 +6,9 @@ import { useQuery } from '@tanstack/react-query';
 import { fetchAssets, Asset } from '@/lib/api';
 
 const Dashboard = () => {
-  const { data: assets } = useQuery({
+  const { data: assets } = useQuery<Asset[]>({
     queryKey: ['assets'],
-    queryFn: fetchAssets,
+    queryFn: () => fetchAssets(),
   });
 
   const stats = {

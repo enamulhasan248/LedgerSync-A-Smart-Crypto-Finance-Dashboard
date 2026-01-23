@@ -47,7 +47,7 @@ export function AssetChart({ asset }: AssetChartProps) {
     const gradientId = `colorGradient-${asset.symbol}`;
 
     return (
-        <Card className="border-none shadow-none bg-transparent">
+        <Card className="border-none shadow-none bg-transparent h-full flex flex-col">
             <CardHeader className="pb-4 px-0">
                 <Tabs
                     defaultValue="24H"
@@ -64,7 +64,7 @@ export function AssetChart({ asset }: AssetChartProps) {
                     </TabsList>
                 </Tabs>
             </CardHeader>
-            <CardContent className="px-0 h-[400px]">
+            <CardContent className="px-0 flex-1 min-h-0">
                 <ResponsiveContainer width="100%" height="100%">
                     <AreaChart data={chartData}>
                         <defs>
@@ -72,7 +72,7 @@ export function AssetChart({ asset }: AssetChartProps) {
                                 <stop
                                     offset="5%"
                                     stopColor={isPositive ? "#10B981" : "#EF4444"}
-                                    stopOpacity={0.3}
+                                    stopOpacity={0.2}
                                 />
                                 <stop
                                     offset="95%"

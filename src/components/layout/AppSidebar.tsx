@@ -46,7 +46,7 @@ export function AppSidebar() {
   return (
     <aside
       className={cn(
-        'h-screen bg-sidebar text-sidebar-foreground flex flex-col transition-all duration-300 ease-in-out border-r border-sidebar-border',
+        'h-screen bg-sidebar/80 backdrop-blur-md text-sidebar-foreground flex flex-col transition-all duration-300 ease-in-out border-r border-sidebar-border sticky top-0 z-40',
         collapsed ? 'w-16' : 'w-64'
       )}
     >
@@ -121,7 +121,7 @@ export function AppSidebar() {
             </>
           )}
         </Button>
-      </div>
-    </aside>
+      </div >
+    </aside >
   );
 }
