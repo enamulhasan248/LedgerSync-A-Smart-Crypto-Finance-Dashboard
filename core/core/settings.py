@@ -117,6 +117,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # ]
 
 CORS_ALLOW_ALL_ORIGINS = True
+CSRF_TRUSTED_ORIGINS = [
+    "https://ledger-sync-a-smart-crypto-finance.vercel.app",
+    "https://ledgersync-a-smart-crypto-finance.onrender.com",
+]
 
 # REST Framework
 REST_FRAMEWORK = {
