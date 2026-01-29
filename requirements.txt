@@ -12,3 +12,5 @@ dj-rest-auth
 django-allauth
 djangorestframework-simplejwt
 dj-database-url
+whitenoise
+gunicorn
