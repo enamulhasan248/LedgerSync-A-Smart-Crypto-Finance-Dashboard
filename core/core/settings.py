@@ -108,13 +108,15 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # --- Custom Configuration ---
 
 # CORS
-CORS_ALLOWED_ORIGINS = [
-    "https://ledger-sync-a-smart-crypto-finance.vercel.app",
-    "http://localhost:8080",  # Keep this for local dev
-]
-CSRF_TRUSTED_ORIGINS = [
-    "https://ledger-sync-a-smart-crypto-finance.vercel.app",
-]
+# CORS_ALLOWED_ORIGINS = [
+#     "https://ledger-sync-a-smart-crypto-finance.vercel.app",
+#     "http://localhost:8080"  # Keep this for local dev
+# ]
+# CSRF_TRUSTED_ORIGINS = [
+#     "https://ledger-sync-a-smart-crypto-finance.vercel.app",
+# ]
+
+CORS_ALLOW_ALL_ORIGINS = True
 
 # REST Framework
 REST_FRAMEWORK = {
