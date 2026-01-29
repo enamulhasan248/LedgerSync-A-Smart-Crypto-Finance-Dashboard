@@ -34,10 +34,12 @@ class AssetViewSet(viewsets.ReadOnlyModelViewSet):
             pass
 
         if asset_type: 
-            # Simple type mapping if needed
-            if asset_type.upper() == 'CRYPTO':
-                queryset = queryset.filter(asset_type='CRYPTO')
-            elif asset_type.upper() == 'STOCKS':
+            asset_type_upper = asset_type.upper()
+            # Handle specific types directly
+            if asset_type_upper in ['CRYPTO', 'STOCK_GLOBAL', 'STOCK_DSE']:
+                queryset = queryset.filter(asset_type=asset_type_upper)
+            elif asset_type_upper == 'STOCKS':
+                # Generic STOCKS maps to both global and DSE
                 queryset = queryset.filter(asset_type__in=['STOCK_GLOBAL', 'STOCK_DSE'])
                 
         return queryset

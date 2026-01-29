@@ -25,3 +25,4 @@ fi
 # (We are now inside the 'core' folder)
 python manage.py collectstatic --no-input
 python manage.py migrate
+python manage.py seed_assets
