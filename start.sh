@@ -20,11 +20,13 @@
 cd core
 
 # 2. FORCE DATA FETCH (Run this immediately so the site isn't empty)
+# This forces the code to fetch prices once before the server even starts listening.
 echo "Fetching initial data..."
 python manage.py shell -c "from assets.tasks import update_asset_prices; update_asset_prices()"
 
-# 3. Start Celery Worker & Beat (Using the Standard Scheduler)
-# We removed '--scheduler django' to fix the crash.
+# 3. Start Celery Worker & Beat
+# REMOVED: '--scheduler django' (This was the cause of the crash)
+# ADDED: '--beat' (This runs the scheduler inside the worker)
 echo "Starting Worker and Scheduler..."
 celery -A core worker --beat --loglevel=info --concurrency=2 &
 
